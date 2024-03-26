@@ -25,7 +25,7 @@ Generate basic labels
 */}}
 {{- define "keda.labels" -}}
 {{- include "keda.crd-labels" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/instance: {{ .Values.customManagedBy | default .Release.Name }}
 {{- if .Values.additionalLabels }}
 {{ toYaml .Values.additionalLabels }}
 {{- end }}
