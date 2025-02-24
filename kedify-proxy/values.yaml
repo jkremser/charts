@@ -60,8 +60,6 @@ deployment:
 service:
   # -- Should the services be rendered with the helm chart?
   enabled: true
-  # -- Name of the service that exposes HTTP and TLS ports. If empty, release name is used.
-  nameOverride: "kedify-proxy"
   # -- [docs](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
   type: ClusterIP
   # -- custom annotations that should be added to both services
@@ -74,17 +72,22 @@ service:
   tlsPort: 8443
   # -- Should the admin service be also rendered with the helm chart?
   exposeAdminInterface: true
-  # -- Name of the service that exposes admin port for envoy. If empty, `${releaseName}-admin` is used.
-  adminSvcNameOverride: "kedify-proxy-admin"
   # -- [docs](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
   adminSvcType: ClusterIP
   # -- port for admin interface of envoy
   adminPort: 9901
 
 # -- resource definitions for envoy container, see [docs](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
-resources: {}
+resources:
+  requests:
+    cpu: 250m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
 
 # -- mutually exclusive with `.deployment.replicas`
+# configure the `.resources` appropriately, because the SO uses cpu and memory scalers
 autoscaling:
   # -- Should the KEDA's `ScaledObject` be also rendered with the helm chart?
   enabled: false

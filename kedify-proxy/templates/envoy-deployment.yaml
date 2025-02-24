@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "kedify-proxy.fullname" . }}
+  name: kedify-proxy
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "kedify-proxy.labels" . | nindent 4 }}
 spec:

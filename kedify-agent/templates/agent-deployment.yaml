@@ -38,8 +38,10 @@ spec:
           env:
             - name: KEDIFY_SERVER
               value: {{ .Values.agent.kedifyServer }}
+            {{- with .Values.agent.agentId }}
             - name: KEDIFY_AGENT_ID
-              value: {{ .Values.agent.agentId }}
+              value: {{ . }}
+            {{- end }}
             - name: KEDIFY_ORGANIZATION_ID
               value: {{ .Values.agent.orgId }}
             - name: KEDIFY_API_KEY
