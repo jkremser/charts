@@ -1,0 +1,21 @@
+{{- if and .Values.grafana.enabled  .Values.grafana.namespaceOverride }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.grafana.namespaceOverride }}
+{{- end }}
+{{- if and .Values.loki.enabled  .Values.loki.namespaceOverride }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.loki.namespaceOverride }}
+{{- end }}
+{{- if and .Values.prometheus.enabled  .Values.prometheus.forceNamespace }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.prometheus.forceNamespace }}
+{{- end }}
